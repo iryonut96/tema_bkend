@@ -1,0 +1,3 @@
+graft tema/templates
+graft tema/static
+include tema/schema.sql

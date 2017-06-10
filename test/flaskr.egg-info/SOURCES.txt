@@ -1,0 +1,13 @@
+MANIFEST.in
+flaskr.egg-info/PKG-INFO
+flaskr.egg-info/SOURCES.txt
+flaskr.egg-info/dependency_links.txt
+flaskr.egg-info/requires.txt
+flaskr.egg-info/top_level.txt
+tema/__init__.py
+tema/flaskr.py
+tema/schema.sql
+tema/static/style.css
+tema/templates/layout.html
+tema/templates/login.html
+tema/templates/show_entries.html
