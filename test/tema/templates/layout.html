@@ -1,19 +1,56 @@
 <!doctype html>
-<title>Flaskr</title>
+<head>
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'textarea' });</script>
+    <title>Articles Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.css')}}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='mystyles.css')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css')}}">
-<div class=page>
-    <h3><a href="{{ url_for('home') }}">Home</a></h3>
-    <h1>Flaskr</h1>
-    <div class=metanav>
-        {% if not session.logged_in %}
-            <a href="{{ url_for('login') }}">log in</a>
-        {% else %}
-            <a href="{{ url_for('logout') }}">log out</a>
-        {% endif %}
-    </div>
+<!-- Start Top Navbar -->
+  <div class="container">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='images/hs_banner.png') }}" width="152px" height="30px" ;></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+              <li><a href="{{ url_for('home') }}">Home</a></li>
+              {% if not session.logged_in %}
+              <li><a href="{{ url_for('login') }}">Log In </a><span class="sr-only">(current)</span></li>
+              {% else %}
+              <li><a href="{{ url_for('logout') }}">Log Out </a><span class="sr-only">(current)</span></li>
+              {% endif %}
+              <li><a href="{{ url_for('register') }}">Register</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <img src="{{ url_for('static', filename='images/search_icon.png') }}" width="25px;" height="25px";>
+            </div>
+            <button type="submit" class="btn btn-primary ">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <!-- End Top Navbar -->
+<div class=container>
+    <div class=blog-post style="text-align:center">
+
     {% for message in get_flashed_messages() %}
         <div class=flash>{{ message }}</div>
     {% endfor %}
     {% block body %}{% endblock %}
+    </div>
 </div>
 

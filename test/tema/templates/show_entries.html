@@ -5,18 +5,25 @@
             <dl>
                 <dt>Title:
                 <dd><input type=text size=30 name=title>
-                <dt>Text:
-                <dd><textarea name=text rows=5 cols=40></textarea>
+                <dt>Date:
+                <dd><input type=text size=30 name=article_date>
+                <dt>Author:
+                <dd><input type=text size=30 name=author>
                 <dt>Mini Text:
                 <dd><input type=text size=30 name=minitext>
+                <dt>Text:
+                <dd><textarea name=text rows=5 cols=100></textarea>
                 <dd><input type=submit value=Share>
             </dl>
         </form>
+
 
     {% endif %}
     <ul class=entries>
     {% for entry in entries %}
         <li><h2>{{ entry.title }}</h2>{{ entry.minitext|safe }}</li>
+
+
     {% else %}
         <li><em>Unbelievable. No entries here so far</em>
     {% endfor %}

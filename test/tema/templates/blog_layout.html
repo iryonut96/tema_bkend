@@ -4,8 +4,8 @@
   <title>Blog Post</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/bootstrap.css">
-  <link rel="stylesheet" href="css/mystyles.css">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.css')}}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='mystyles.css')}}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -22,7 +22,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><img src="images/hs_banner.png" width="152px" height="30px" ;></a>
+          <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='images/hs_banner.png') }}" width="152px" height="30px" ;></a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
@@ -48,7 +48,7 @@
           </ul>
           <form class="navbar-form navbar-right">
             <div class="form-group">
-              <img src="images/search_icon.png" width="25px;" height="25px";>
+              <img src="{{ url_for('static', filename='images/search_icon.png') }}" width="25px;" height="25px";>
             </div>
             <button type="submit" class="btn btn-primary ">Subscribe</button>
           </form>
@@ -61,7 +61,7 @@
   <!-- Start Banner -->
   <div class="blog-banner">
     <div class="title">{{ entry.title }}</div>
-    <div class="title2">MATHEW PETTERSON | MAY 25,2017</div>
+    <div class="title2">{{ entry.author }} | {{ entry.article_date }}</div>
   </div>
   <!-- End Banner -->
 
@@ -125,7 +125,7 @@
           </ul>
         </div>
         <div class="col-sm-2 col-md-6 col-lg-3">
-          <img src="images/footer-logo.png" width="120px" height="35px" style="margin-bottom:15px;"/>
+          <img src="{{ url_for('static', filename='images/footer-logo.png') }}" width="120px" height="35px" style="margin-bottom:15px;"/>
           <p>Made by hand in 40 cities around the world</p>
         </div>
       </div>

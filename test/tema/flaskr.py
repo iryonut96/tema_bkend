@@ -3,6 +3,17 @@ import os
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
     render_template, flash
+from wtforms import Form, BooleanField, StringField, PasswordField, validators
+
+class RegistrationForm(Form):
+    username = StringField('Username', [validators.Length(min=4, max=25)])
+    email = StringField('Email Address', [validators.Length(min=6, max=35)])
+    password = PasswordField('New Password', [
+        validators.DataRequired(),
+        validators.EqualTo('confirm', message='Passwords must match')
+    ])
+    confirm = PasswordField('Repeat Password')
+    accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])
 
 app = Flask(__name__) #create the application instance
 app.config.from_object(__name__) #load config from this file , flaskr.py
@@ -51,27 +62,35 @@ def initdb_command():
     print('Initialized the database.')
 
 # Entries
-@app.route('/')
+@app.route('/panel')
 def show_entries():
     db = get_db()
     cur = db.execute('select title, text, minitext from entries order by id desc')
     entries = cur.fetchall()
     return render_template('show_entries.html', entries=entries)
 
-@app.route('/index')
+@app.route('/')
 def home():
     db = get_db()
-    cur = db.execute('select title, text, minitext from entries order by id desc')
+    cur = db.execute('select id, title, text, minitext from entries order by id desc')
     entries = cur.fetchall()
     return render_template('test.html', entries=entries)
+
+@app.route('/article/<string:id>')
+def article(id):
+    db = get_db()
+    cur = db.execute('select * from entries where id=? order by id desc', id)
+    entry = cur.fetchone()
+    return render_template('blog_layout.html', entry=entry, id=id)
 
 @app.route('/add', methods=['POST'])
 def add_entry():
     if not session.get('logged_in'):
         abort(401)
     db = get_db()
-    db.execute('insert into entries (title, text, minitext) values (?, ?, ?)',
-                 [request.form['title'], request.form['text'], request.form['minitext']])
+    db.execute('insert into entries (title, text, minitext, author, article_date) values (?, ?, ?, ?, ?)',
+                 [request.form['title'], request.form['text'], request.form['minitext'], request.form['author'],
+                  request.form['article_date']])
     db.commit()
     flash('New entry was successfully posted')
     return redirect(url_for('show_entries'))
@@ -91,6 +110,17 @@ def login():
             flash('You were logged in')
             return redirect(url_for('show_entries'))
     return render_template('login.html', error=error)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm(request.form)
+    if request.method == 'POST' and form.validate():
+        user = User(form.username.data, form.email.data,
+                    form.password.data)
+        db_session.add(user)
+        flash('Thanks for registering')
+        return redirect(url_for('show_entries'))
+    return render_template('register.html', form=form)
 
 @app.route('/logout')
 def logout():
