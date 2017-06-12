@@ -1,7 +1,8 @@
 <!doctype html>
 <title>Flaskr</title>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css')}}">
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css')}}">
 <div class=page>
+    <h3><a href="{{ url_for('home') }}">Home</a></h3>
     <h1>Flaskr</h1>
     <div class=metanav>
         {% if not session.logged_in %}

@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Front Page</title>
+  <title>Blog Post</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/mystyles.css">
-  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.css')}}">
-  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='mystyles.css')}}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -24,7 +22,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='images/hs_banner.png')}}" width="152px" height="30px" ;></a>
+          <a class="navbar-brand" href="#"><img src="images/hs_banner.png" width="152px" height="30px" ;></a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
@@ -50,16 +48,9 @@
           </ul>
           <form class="navbar-form navbar-right">
             <div class="form-group">
-              <img src="{{ url_for('static', filename='images/search_icon.png')}}" width="25px;" height="25px";>
+              <img src="images/search_icon.png" width="25px;" height="25px";>
             </div>
             <button type="submit" class="btn btn-primary ">Subscribe</button>
-              {% if not session.logged_in %}
-                <a href="{{ url_for('login') }}" class="btn btn-info" role="button">LOG IN</a>
-              {% else %}
-                <a href="{{ url_for('logout') }}" class="btn btn-info" role="button">LOG OUT</a>
-              <a href="{{url_for('show_entries')}}"><img src="{{ url_for('static', filename='images/gear.png')}}" width="30px" height="30px"></a>
-              {% endif %}
-
           </form>
         </div>
       </div>
@@ -68,68 +59,20 @@
   <!-- End Top Navbar -->
 
   <!-- Start Banner -->
-  <div class="frontpage-banner" style="background-image: url('{{ url_for('static', filename='images/frontpage-banner.png')}}');">
-    <div class="title">FEATURED ARTICLE</div>
-    <div class="title2">What Does It Mean to be 'Customer Service Oriented?'</div>
+  <div class="blog-banner">
+    <div class="title">{{ entry.title }}</div>
+    <div class="title2">MATHEW PETTERSON | MAY 25,2017</div>
   </div>
   <!-- End Banner -->
 
-  <!-- Start Navbar -->
-  <div class="frontpage-right-navbar">
-    <div class="container">
-      <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#home">Most Recent</a></li>
-        <li><a data-toggle="tab" href="#menu1">Popular</a></li>
-        <li><a data-toggle="tab" href="#menu1">Growth</a></li>
-        <li><a data-toggle="tab" href="#menu1">Support</a></li>
-        <li><a data-toggle="tab" href="#menu1">Culture</a></li>
-        <li><a data-toggle="tab" href="#menu1">Product</a></li>
-        <li><a data-toggle="tab" href="#menu1">Help Desk Tips</a></li>
-      </ul>
-    </div>
-  </div>
-  <!-- End Navbar -->
-
-  <!-- Start Tabs -->
-  <div class="frontpage-cont">
-    <div class="right-cont">
-      <div class="tab-content">
-        <!-- Start Menu 1 -->
-        <div id="menu1" class="tab-pane fade in active">
-          <div class="container">
-          {% for row in entries|batch(3) %}
-            <div class="row">
-              {% for entry in row %}
-              <div class="col-md-4">
-                <img src="{{ url_for('static', filename='images/1.png')}}">
-                <div class="text-cont">
-                  <div class="title"> {{ entry.title }} </div>
-                  <div class="subtitle"> {{ entry.minitext|safe }} </div>
-                </div>
-              </div>
-              {% endfor %}
-
-            </div>
-          {% endfor %}
-          </div>
-        </div>
-
-        <!-- End Menu 1 -->
-
-        <!-- Start Menu Sample
-        <div id="menu2" class="tab-pane fade">
-          <h3> tab 2 </h3>
-        </div>
-
-        <div id="menu3" class="tab-pane fade">
-          <h3> tab 3</h3>
-        </div>
-            End Menu Sample -->
-
+  <div class="container">
+    <div class="blog-post">
+      <div class="second">
+          {{ entry.text|safe }}
       </div>
     </div>
   </div>
-  <!-- End Tabs -->
+
   <!-- Start Footer -->
   <div class="hs-footer">
     <div class="container">
@@ -182,7 +125,7 @@
           </ul>
         </div>
         <div class="col-sm-2 col-md-6 col-lg-3">
-          <img src="{{ url_for('static', filename='images/footer-logo.png')}}" width="120px" height="35px" style="margin-bottom:15px;"/>
+          <img src="images/footer-logo.png" width="120px" height="35px" style="margin-bottom:15px;"/>
           <p>Made by hand in 40 cities around the world</p>
         </div>
       </div>
